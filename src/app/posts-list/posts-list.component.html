@@ -1,0 +1,43 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <h4 class="display-4">
+        <fa-icon class="fa-pulse fa-1x fa-fw mx-2" [icon]="faAngular"></fa-icon>
+        Posts from GO Rest API
+      </h4>
+      <ng-container *ngIf="!spinnerFlag">
+        <div
+          class="card mt-2 mb-2"
+          *ngFor="
+            let post of postsData
+          "
+        >
+          <h5 class="card-header">{{ post.title }}</h5>
+          <div class="card-body">
+            <h5 class="card-title">Created By User: {{ post.user_id }}</h5>
+            <p class="card-text">
+              {{ post.body | slice: 0:120 }}
+              <span
+                ><a class="button" [routerLink]="['/post-detail', post.id]"
+                  >...Read More</a
+                ></span
+              >
+            </p>
+          </div>
+        </div>
+        <ngb-pagination
+          [collectionSize]="postsMetadata"
+          [(page)]="page"
+          [pageSize]="pageSize"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="fetchPosts($event)"
+        ></ngb-pagination>
+      </ng-container>
+      <div class="d-flex justify-content-center m-auto" *ngIf="spinnerFlag">
+        <fa-icon class="fa-pulse fa-8x fa-fw" [icon]="faSpinner"></fa-icon>
+      </div>
+    </div>
+  </div>
+</div>
